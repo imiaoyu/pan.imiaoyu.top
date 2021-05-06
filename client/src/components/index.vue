@@ -10,6 +10,9 @@
       <el-button type="primary"
         @click="dialogFormVisible = true">登录/注册</el-button>
     </div>
+    <div class="loading">
+      等待奇迹发生
+    </div>
     <el-dialog title="登录/注册"
       :visible.sync="dialogFormVisible"
       width="350px">
@@ -132,6 +135,10 @@ export default {
 }
 .title {
   font-size: 40px;
+}
+.loading {
+  margin-top: 50%;
+  font-size: 25px;
 }
 .label {
   font-size: 35px;

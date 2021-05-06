@@ -65,6 +65,6 @@ export default {
 <style scoped>
 .tab {
   min-height: 400px;
-  padding: 20px 40px;
+  padding: 20px 20px;
 }
 </style>

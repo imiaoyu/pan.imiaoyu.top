@@ -4,9 +4,9 @@
       :cell-style="{'text-align':'center'}"
       :header-cell-style="{'text-align':'center'}"
       style="width: 100%">
-<!--      <el-table-column type="index"-->
-<!--      >-->
-<!--      </el-table-column>-->
+      <el-table-column type="index"
+      >
+      </el-table-column>
       <el-table-column prop="file_name"
         label="文件名"
         width="180px">

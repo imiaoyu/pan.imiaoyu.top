@@ -192,4 +192,7 @@ export default {
   display: block;
 
 }
+.editor-after-div{
+  padding-right: 0px;
+}
 </style>

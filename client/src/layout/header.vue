@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="title">
-      中转盘<span class="label">Cloud Drive</span>
+      中转盘 <span class="label">Cloud Drive</span>
     </div>
     <div class="user">
       用户:{{username}}&nbsp;&nbsp;<a href="#"
@@ -35,21 +35,25 @@ export default {
   margin-top: 20px;
   box-shadow: 0 5px 15px -10px #ccc;
   padding: 20px;
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*flex-wrap: wrap;*/
 }
 .title {
-  font-size: 25px;
+  font-size: 30px;
   text-align: left;
   /* margin-left: 40px; */
 }
 .label {
-  font-size: 25px;
+  font-size: 20px;
 }
 .user {
-  /*top: 20px;*/
+  top: 20px;
   /* margin-right: 40px;
   text-align: right; */
   /*position: absolute;*/
   margin-top: 2rem;
-    text-align: right;
+  text-align: right;
+  /*right: 0px;*/
 }
 </style>
