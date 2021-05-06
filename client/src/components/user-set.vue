@@ -4,7 +4,7 @@
       status-icon
       :rules="rules"
       ref="ruleForm"
-      label-width="100px"
+      label-width="5rem"
       class="change-password">
       <el-form-item label="旧密码"
         prop="oldPass">

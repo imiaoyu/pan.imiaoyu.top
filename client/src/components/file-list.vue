@@ -37,7 +37,7 @@
         <template slot-scope="scope">
           <a :href="getFile(scope.row)">
             <el-button size="mini"
-              type="info"
+              type="primary"
               @click="handleDownload">下载</el-button>
           </a>
           <el-button size="mini"
