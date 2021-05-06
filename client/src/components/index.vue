@@ -46,7 +46,7 @@ export default {
         username: '',
         password: ''
       },
-      formLabelWidth: '120px',
+      formLabelWidth: '4rem',
       flag: ''
 
     }

@@ -39,15 +39,17 @@ export default {
 .title {
   font-size: 25px;
   text-align: left;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 .label {
   font-size: 25px;
 }
 .user {
   /*top: 20px;*/
-  margin-right: 40px;
-  text-align: right;
+  /* margin-right: 40px;
+  text-align: right; */
   /*position: absolute;*/
+  margin-top: 2rem;
+    text-align: right;
 }
 </style>

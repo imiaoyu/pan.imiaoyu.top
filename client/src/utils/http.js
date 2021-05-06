@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Loading } from 'element-ui'
 
 let httpInstance = axios.create()
 
@@ -14,10 +15,14 @@ httpInstance.formurl = (url, data, config) => {
   })
 }
 
+let requests = 0
+let loading
 //  request拦截器
 httpInstance.interceptors.request.use(
   config => {
     console.log(config)
+    requests += 1
+    loading = Loading.service()
     return config
   },
   error => {
@@ -28,6 +33,10 @@ httpInstance.interceptors.request.use(
 httpInstance.interceptors.response.use(
   response => {
     if (response.status === 200) {
+      requests--
+      if (requests <= 0) {
+        loading.close()
+      }
       return Promise.resolve(response)
     }
   },
