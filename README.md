@@ -1,8 +1,8 @@
 ＃pan.imiaoyu.top
-基于vue+Element UI框架的云盘项目
+#基于vue+Element UI框架的云盘项目
 
-npm install
+#npm install
 
-npm run dev
+#npm run dev
 
-npm run build
+#npm run build
