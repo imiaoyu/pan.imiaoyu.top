@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData"
+    <el-table :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       :cell-style="{'text-align':'center'}"
       :header-cell-style="{'text-align':'center'}"
       style="width: 100%">
@@ -50,6 +50,16 @@
         </template>
       </el-table-column>
     </el-table>
+<!--    分页数据-->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[5, 10, 20, 40]"
+    :page-size="pagesize"
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="tableData.length">
+    </el-pagination>
   </div>
 </template>
 
@@ -57,6 +67,8 @@
 export default {
   data () {
     return {
+      currentPage: 1, // 初始页
+      pagesize: 5, //    每页的数据
       tableData: [],
       show: '',
       screenWidth: ''
@@ -141,6 +153,16 @@ export default {
       var s =
         date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
       return `${Y}-${M}-${D} ${h}:${m}:${s}`
+    },
+
+    // 初始页currentPage、初始每页数据数pagesize和数据data
+    handleSizeChange: function (size) {
+      this.pagesize = size
+      console.log(this.pagesize) // 每页下拉显示数据
+    },
+    handleCurrentChange: function (currentPage) {
+      this.currentPage = currentPage
+      console.log(this.currentPage) // 点击第几页
     }
   },
   mounted () {
