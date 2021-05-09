@@ -11,7 +11,7 @@
         @click="dialogFormVisible = true">登录/注册</el-button>
     </div>
     <div class="loading">
-      等待奇迹发生
+      等待奇迹发生<br>
     </div>
     <el-dialog title="登录/注册"
       :visible.sync="dialogFormVisible"
@@ -50,7 +50,7 @@ export default {
         password: ''
       },
       formLabelWidth: '4rem',
-      flag: ''
+      flag: true
 
     }
   },
@@ -83,13 +83,12 @@ export default {
       this.dialogFormVisible = false
       // 调用检测用户是否存在方法
       this.signuser()
+
       // eslint-disable-next-line eqeqeq
       if (this.form.username == '' || this.form.password == '') {
         this.$message.error('用户或密码为空')
         // eslint-disable-next-line eqeqeq
-      } else if (this.flag == false) {
-        this.$message.error('该用户已存在')
-      } else {
+      } else if (this.flag == true) {
         this.$http
           .post('/user/add', this.form)
           .then(res => {
@@ -98,12 +97,13 @@ export default {
               this.$message.error(res.data.message)
             } else {
               this.$message.success(res.data.message)
-              this.$router.push('tab-list')
             }
           })
           .catch(err => {
             console.log(err)
           })
+      } else {
+        this.$message.error('该用户已存在')
       }
     },
     // 判断用户是否存在
@@ -111,12 +111,15 @@ export default {
       this.$http
         .post('/user/signuser', this.form)
         .then(res => {
-          if (res.data.flag === 0) {
+          // eslint-disable-next-line eqeqeq
+          if (res.data.flag == 0) {
             // this.$message.error(res.data.message)
             this.flag = false
+            // alert('已经被注册了')
           } else {
             // this.$message.success(res.data.message)
             this.flag = true
+            // alert('可以注册')
           }
         })
         .catch(err => {

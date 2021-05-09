@@ -1,12 +1,19 @@
 <template>
+  <div>
+  <div style="background-color: #2499b2;width: 100%;height: 10px"></div>
+    <div style="background-color: #7ac7cf;width: 100%;height: 6px"></div>
+    <div style="background-color: #e3ad9b;width: 100%;height: 5px"></div>
   <div class="header">
     <div class="title">
-      中转盘 <span class="label">Cloud Drive</span>
+         <a @click="home()">中转盘</a>
+<!--      <span class="label">Cloud Drive</span>-->
     </div>
     <div class="user">
-      用户:{{username}}&nbsp;&nbsp;<a href="#"
+      <img src="http://up.woozooo.com/images/u.gif"/>
+      {{username}}&nbsp;&nbsp;<a href="#"
         @click="signOut">退出</a>
     </div>
+  </div>
   </div>
 </template>
 
@@ -22,6 +29,10 @@ export default {
     signOut () {
       this.$router.push({ path: '/' })
       sessionStorage.clear()
+    },
+    home () {
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      this.$router.push({ path: '/tab-list'})
     }
   }
 }
@@ -32,28 +43,32 @@ export default {
 .header {
   text-align: center;
   font-size: 18px;
-  margin-top: 20px;
+  margin-top: 10px;
   box-shadow: 0 5px 15px -10px #ccc;
-  padding: 20px;
-  /*display: flex;*/
+  padding: 10px;
+  display: flex;
   /*flex-direction: row;*/
   /*flex-wrap: wrap;*/
 }
 .title {
+  width: 30%;
   font-size: 30px;
   text-align: left;
+  bottom: 0px;
+  height: 50px;
   /* margin-left: 40px; */
 }
 .label {
   font-size: 20px;
 }
 .user {
-  top: 20px;
+  width: 70%;
   /* margin-right: 40px;
   text-align: right; */
   /*position: absolute;*/
-  margin-top: 2rem;
+  margin-top: 10px;
   text-align: right;
   /*right: 0px;*/
+  /*margin-right: auto;*/
 }
 </style>

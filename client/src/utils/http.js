@@ -3,7 +3,8 @@ import { Loading } from 'element-ui'
 
 let httpInstance = axios.create()
 
-httpInstance.defaults.baseURL = 'http://api.imiaoyu.top/'
+// httpInstance.defaults.baseURL = 'http://api.imiaoyu.top/'
+httpInstance.defaults.baseURL = 'http://localhost:3000/'
 httpInstance.defaults.timeout = 5000
 
 httpInstance.formurl = (url, data, config) => {

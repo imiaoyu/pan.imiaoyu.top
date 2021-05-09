@@ -4,17 +4,16 @@
       :cell-style="{'text-align':'center'}"
       :header-cell-style="{'text-align':'center'}"
       style="width: 100%">
-      <el-table-column type="index"
-      >
-      </el-table-column>
+<!--      <el-table-column type="index"-->
+<!--      >-->
+<!--      </el-table-column>-->
       <el-table-column prop="file_name"
         label="文件名"
-        width="180px">
+        width="120px">
       </el-table-column>
       <el-table-column prop="size"
-                       v-if="show"
         label="文件大小"
-        width="180px"
+        width="100px"
         :formatter="dealSize">
       </el-table-column>
       <el-table-column prop="upload_time"
@@ -36,13 +35,18 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <a :href="getFile(scope.row)">
-            <el-button size="mini"
-              type="primary"
-              @click="handleDownload">下载</el-button>
+<!--            <el-button size="mini"-->
+<!--              type="primary"-->
+<!--              @click="handleDownload">下载</el-button>-->
           </a>
           <el-button size="mini"
+                     type="primary"
+                     @click="share(scope.row)"
+          >详情</el-button>
+          <a>
+          <el-button size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button></a>
         </template>
       </el-table-column>
     </el-table>
@@ -59,6 +63,7 @@ export default {
     }
   },
   methods: {
+    // 删除数据
     handleDelete (index, row) {
       this.$http
         .delete(`/api/articless/${row.hash_name}/${row.id}`)
@@ -70,6 +75,7 @@ export default {
           console.log('Error=>', err)
         })
     },
+    // 下载数据
     handleDownload () {
       setTimeout(() => {
         this.refreshFileList()
@@ -78,6 +84,7 @@ export default {
     refreshFileList () {
       this.getFileList()
     },
+    // 获取数据
     getFileList () {
       // let params = {
       //   uid: sessionStorage.getItem('uid')
@@ -92,7 +99,7 @@ export default {
         .then(res => {
           // eslint-disable-next-line eqeqeq
           if (res.data.code == 0) {
-            this.$message.error(res.data.message)
+            this.$message.error('500错误 稍后再试')
           } else {
             this.tableData = res.data.data.results
           }
@@ -101,17 +108,25 @@ export default {
           console.log(err)
         })
     },
+    share (row) {
+      // eslint-disable-next-line no-undef
+      // alert(row)
+      this.$router.push({
+        path: '/file-details/' + row.hash_name
+      })
+    },
     getFile (data) {
       let url = `http://pan-qiniu.imiaoyu.top/${data.file_name}?attname=${data.file_name}`
       return url
     },
     dealSize (row, column) {
       let fileSize = (row.size / 1024 / 1024).toFixed(2)
-      return `${fileSize}mb`
+      return `${fileSize}MB`
     },
     dealTime (row, column) {
       return this.formatTime(row.upload_time)
     },
+    // 计算日期
     formatTime (value) {
       var date = new Date(value)
       var Y = date.getFullYear()
@@ -131,25 +146,39 @@ export default {
   mounted () {
     // 挂载window.onresize方法
     const that = this
-
     window.onresize = () => {
       return (() => {
         window.screenWidth = window.innerWidth
         that.screenWidth = window.screenWidth
       })()
-    }
-    this.getFileList()
-  },
-  watch: {
-    screenWidth (val) {
-      this.screenWidth = val
-      console.log(this.screenWidth)
+
+      // eslint-disable-next-line no-unreachable
       if (this.screenWidth < 1200) {
         this.show = false
+        // eslint-disable-next-line eqeqeq
+      } else if (this.screenWidth == 1920) {
+        this.show = true
       } else {
         this.show = true
       }
     }
+
+    this.getFileList()
   }
+  // watch: {
+  //   screenWidth (val) {
+  //     this.screenWidth = val
+  //     console.log(this.screenWidth)
+  //     if (this.screenWidth < 1200) {
+  //       this.show = false
+  //       this.Width = 180 - 60
+  //       // eslint-disable-next-line eqeqeq
+  //     } else if (this.screenWidth == 1920) {
+  //       this.show = true
+  //     } else {
+  //       this.show = true
+  //     }
+  //   }
+  // }
 }
 </script>

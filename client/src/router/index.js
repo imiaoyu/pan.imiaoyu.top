@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/components/index'
 import list from '@/components/tab-list'
+import details from '@/components/file-details.vue'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ const router = new Router({
       path: '/tab-list',
       name: 'tab-list',
       component: list
+    },
+    {
+      path: '/file-details/:hash_name',
+      name: 'file-details',
+      component: details
     }
   ]
 })

@@ -99,7 +99,37 @@ router.get('/api/list', (req,res)=>{
     db.dbConn(sql,sqlObj,callBack)
 });
 
-
+// 获取单个文件数据
+router.get('/api/single-list', (req,res)=>{
+    const hash_name = req.query.hash_name;
+    console.log('hsah_name:'+hash_name);
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `select * from file where hash_name='${hash_name}'`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("获取单个文件失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }
+        res.send({
+            message:"读取成功",
+            flag:1,
+            code:200,
+            data:{
+                total_count:data.length,
+                page:1,
+                per_page:2,
+                results:data
+            }
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
 
 //删除文件
 router.delete('/api/articless/:hash_name/:id',  (req,res)=>{
@@ -132,20 +162,25 @@ router.post('/user/login',function (req,res){
     // var code = req.body.password
     console.log("服务端",req.body)
     const {username,password}=req.body;
-    let sql=`select * from user where username=${username} and password=${password}`
+    let sql=`select * from user where username='${username}' and password='${password}'`
     console.log("sql",sql)
     let sqlObj=[]
     console.log("sqlObj",sqlObj)
     let callBack=function(err,data){
         if(err){
             console.log("失败")
+            res.send({
+                flag:0,
+                message:"账号获取密码错误",
+                code:500
+            })
             return
         }
         if(data.length!=1){
-            console.log("密码或用户名出错")
+            console.log("账号或密码错误")
             res.send({
                 flag:0,
-                message:"用户名或密码出错",
+                message:"账号或密码错误",
                 code:500
             })
             return
@@ -202,7 +237,7 @@ router.post('/user/add',function (req,res) {
         //     return
         // }
         res.send({
-            message: "注册成功",
+            message: "注册成功 请登陆",
             code: 200,
         })
         // console.log(data[0].uid+' '+data[0].username)
@@ -219,7 +254,7 @@ router.post('/user/signuser',function (req,res){
     // var code = req.body.password
     console.log("判断用户是否存在：",req.body.username)
     const {username}=req.body;
-    let sql=`select * from user where username=${username}`
+    let sql=`select * from user where username='${username}'`
     console.log("sql",sql)
     let sqlObj=[]
     console.log("sqlObj",sqlObj)
@@ -290,6 +325,31 @@ router.put('/user/update', (req,res)=>{
     db.dbConn(sql,sqlObj,callBack)
 
 })
+
+//下载量计算
+router.get('/api/download', (req,res)=>{
+    const hash_name = req.query.hash_name;
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `update file set download=download+1 where hash_name='${hash_name}'`
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }
+        res.send({
+            message:"成功",
+            flag:1,
+            code:200,
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
 
 //新增数据
 router.post('/api/InsertUserMsg',(req,res)=>{
