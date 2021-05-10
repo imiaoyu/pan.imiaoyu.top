@@ -18,12 +18,13 @@
     :on-error="handleError"
     :before-upload="beforeAvatarUpload"
     :on-progress="uploadVideoProcess"
-    :data="qiniuData">
+    :data="qiniuData"
+    width="100px">
     <div v-if="videoFlag == ''" class="el-default">
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </div>
-    <div class="el-upload__tip" slot="tip">所有文件格式都支持，且不超过4G</div>
+    <div class="el-upload__tip" slot="tip">所有文件格式都支持，且不超过1G</div>
     <el-progress  v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
   </el-upload>
   </div>
@@ -94,7 +95,7 @@ export default {
       this.qiniuData.key = file.name
       this.pan.file_name = file.name
       this.pan.size = file.size
-      const isLt10M = file.size / 1024 / 1024 < 4100
+      const isLt10M = file.size / 1024 / 1024 < 1024
       // eslint-disable-next-line eqeqeq
       // if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) == -1) {
       //   this.$message.error('请上传正确的视频格式')
@@ -108,7 +109,7 @@ export default {
       this.pan.type = suffix
 
       if (!isLt10M) {
-        this.$message.error('上传视频大小不能超过7G哦!')
+        this.$message.error('上传单个文件大小不能超过1G哦!')
         return false
       }
     },
@@ -193,6 +194,6 @@ export default {
 
 }
 .editor-after-div{
-  padding-right: 0px;
+  /*width: 254px;*/
 }
 </style>

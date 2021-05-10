@@ -3,13 +3,15 @@
     <el-table :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
       :cell-style="{'text-align':'center'}"
       :header-cell-style="{'text-align':'center'}"
-      style="width: 100%">
+      style="width: 100%"
+      :default-sort = "{prop: 'file_name', order: 'ascending'}">
 <!--      <el-table-column type="index"-->
 <!--      >-->
 <!--      </el-table-column>-->
       <el-table-column prop="file_name"
         label="文件名"
-        width="120px">
+        width="120px"
+        sortable>
       </el-table-column>
       <el-table-column prop="size"
         label="文件大小"
@@ -40,7 +42,6 @@
 <!--              @click="handleDownload">下载</el-button>-->
           </a>
           <el-button size="mini"
-                     type="primary"
                      @click="share(scope.row)"
           >详情</el-button>
           <a>
@@ -68,7 +69,7 @@ export default {
   data () {
     return {
       currentPage: 1, // 初始页
-      pagesize: 5, //    每页的数据
+      pagesize: 10, //    每页的数据
       tableData: [],
       show: '',
       screenWidth: ''

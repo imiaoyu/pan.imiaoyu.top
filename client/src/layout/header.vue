@@ -10,8 +10,9 @@
     </div>
     <div class="user">
       <img src="http://up.woozooo.com/images/u.gif"/>
-      {{username}}&nbsp;&nbsp;<a href="#"
-        @click="signOut">退出</a>
+      <a @click="information">{{username}}</a>
+      <a href="#" @click="signOut" v-if="username">退出</a>
+      <a href="#" @click="sign" v-if="!username">登陆</a>
     </div>
   </div>
   </div>
@@ -33,6 +34,13 @@ export default {
     home () {
       // eslint-disable-next-line standard/object-curly-even-spacing
       this.$router.push({ path: '/tab-list'})
+    },
+    information () {
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      this.$router.push({ path: '/user-information'})
+    },
+    sign () {
+      this.$router.push({ path: '/' })
     }
   }
 }

@@ -194,7 +194,7 @@ router.post('/user/login',function (req,res){
                 }
             })
             // console.log(data[0].uid+' '+data[0].username)
-            // console.log(data)
+            console.log('登录成功')
 
 
 
@@ -241,13 +241,36 @@ router.post('/user/add',function (req,res) {
             code: 200,
         })
         // console.log(data[0].uid+' '+data[0].username)
-        // console.log(data)
+        console.log('注册成功')
 
 
     }
     db.dbConn(sql, sqlObj, callBack)
 
 })
+
+// 收藏
+router.post('/api/collection', (req,res)=>{
+    const {uid,url} = req.body;
+    console.log(req.body)
+    // let sql= `select * from video where up=${name}`;
+    let sql= `insert into collection(uid,url) values('${uid}','${url}')`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        res.send({
+            message:"收藏成功",
+            code:'200'
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
 // 判断用户是否存在
 router.post('/user/signuser',function (req,res){
     // var mobile = req.body.username

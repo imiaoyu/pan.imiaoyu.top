@@ -51,8 +51,26 @@ export default {
     share () {
       alert(window.location.href)
     },
+    // 收藏
     collection () {
-      alert('开发中....')
+      // alert('开发中....')
+      // eslint-disable-next-line eqeqeq
+      if (!sessionStorage.username) {
+        this.$message.error('请先登录')
+        this.$router.push({ path: '/' })
+      } else {
+        this.$http
+          .post(`/api/collection`, {
+            uid: sessionStorage.getItem('uid'),
+            url: window.location.href
+          })
+          .then(res => {
+            this.$message.success(res.data.message)
+          })
+          .catch(err => {
+            console.log('Error=>', err)
+          })
+      }
     },
     see (data) {
       // alert('开发中....')
