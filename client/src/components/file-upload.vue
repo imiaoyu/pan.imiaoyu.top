@@ -166,6 +166,17 @@ export default {
 
 </script>
 <style scoped>
+
+@media screen and (max-width: 768px){
+  .editor-after-div /deep/ .el-upload
+  {
+    width: 100%;
+  }
+  .editor-after-div /deep/ .el-upload-dragger {
+    width: 100%;
+  }
+}
+
 .el-form-item /deep/ .el-upload--picture-card {
 
   width: 254px;

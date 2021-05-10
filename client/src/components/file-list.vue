@@ -47,6 +47,7 @@
           <a>
           <el-button size="mini"
             type="danger"
+            class="deleteBtn"
             @click="handleDelete(scope.$index, scope.row)">删除</el-button></a>
         </template>
       </el-table-column>
@@ -205,3 +206,10 @@ export default {
   // }
 }
 </script>
+<style scoped>
+@media screen and (max-width: 768px) {
+  .deleteBtn{
+    margin-top: 5px!important;
+  }
+}
+</style>
