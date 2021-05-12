@@ -5,7 +5,7 @@
       <div class="head">
         <div style="text-align: left">当前账号：</div> <div style="text-align: right">{{ this.username }}</div>
         <el-divider></el-divider>
-        <div style="text-align: left">账号等级：</div> <div style="text-align: right">手动满级</div>
+        <div style="text-align: left">账号等级：</div> <div style="text-align: right">满级</div>
         <el-divider></el-divider>
         <div style="text-align: left">下载速度：</div> <div style="text-align: right">无限制</div>
         <el-divider></el-divider>

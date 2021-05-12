@@ -9,7 +9,8 @@
       </div>
       <div class="download">
 <!--        <a :href="see(data)"><el-button size="medium">预览</el-button></a>-->
-        <el-button size="medium" @click="load">下载</el-button>
+<!--        <el-button size="medium" @click="load">下载</el-button>-->
+        <svg @click="load" t="1620825376308" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4763" width="60" height="60" ><path d="M511.957333 0c282.752 0 512 229.248 512 512s-229.248 512-512 512-512-229.248-512-512 229.248-512 512-512z m0 256a42.666667 42.666667 0 0 0-42.666666 42.666667v337.92l-144-115.2-4.394667-3.114667a42.666667 42.666667 0 0 0-48.938667 69.717333l213.333334 170.666667a42.666667 42.666667 0 0 0 53.333333 0l213.333333-170.666667 3.968-3.626666a42.666667 42.666667 0 0 0-57.301333-63.018667L554.666667 636.501333V298.666667a42.666667 42.666667 0 0 0-37.674667-42.368z" fill="#2499b2" p-id="4764" data-spm-anchor-id="a313x.7781069.0.i0" class=""></path></svg>
       </div>
     </div>
     <div class="err" v-if="data == ''">
@@ -136,7 +137,7 @@ export default {
 .head{
   color: #888888;
   margin-top: 30px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .body{
   min-height: 400px;
@@ -144,10 +145,10 @@ export default {
 }
 .download{
   text-align: center;
-  padding-top: 40%;
+  padding-top: 10rem;
 }
 .err{
-  padding-top: 15rem;
+  padding-top: 13rem;
   font-size: 18px;
   color: #888888;
 }

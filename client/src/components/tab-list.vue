@@ -61,7 +61,8 @@ export default {
           compoName: 'about',
           tabLabel: '关于'
         }
-      ]
+      ],
+      flag: true
     }
   },
   methods: {
@@ -69,6 +70,15 @@ export default {
       // console.log(tab, event)
       // console.log(event.target.getAttribute('id')) // 获取到当前元素的id
     }
+  },
+  mounted () {
+    const h = this.$createElement
+
+    this.$notify({
+      title: '致用户：',
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      message: h('a', { style: 'color: #888888'}, '新增文件分享功能')
+    })
   }
 }
 </script>
