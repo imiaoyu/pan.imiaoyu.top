@@ -4,6 +4,7 @@ import index from '@/components/index'
 import list from '@/components/tab-list'
 import details from '@/components/file-details.vue'
 import information from '@/components/user-information'
+import share from '@/components/file-share'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ const router = new Router({
       path: '/user-information',
       name: 'user-information',
       component: information
+    },
+    {
+      path: '/sid/:sid',
+      name: 'file-share',
+      component: share
     }
   ]
 })

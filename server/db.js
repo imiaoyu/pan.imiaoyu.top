@@ -22,7 +22,9 @@ module.exports={
         host:"localhost",
         user:"root",
         password:"root",
-        database:"pan"
+        database:"pan",
+        // timezone:"Asia/Shanghai",
+        timezone: '+08:00',
     },
     dbConn:function(sql,sqlObj,callBack){
         let pool=mysql.createPool(this.config)

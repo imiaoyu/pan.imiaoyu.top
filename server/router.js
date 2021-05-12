@@ -18,7 +18,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true })
 router.post('/api/newarticle', (req,res)=>{
     const {file_name,hash_name,type,size,uid,url} = req.body;
     const upload_time = getNowFormatDate();
-console.log(upload_time)
+    console.log('上传日期：' + upload_time)
     const download = 0
     console.log(req.body)
     // let sql= `select * from video where up=${name}`;
@@ -249,6 +249,62 @@ router.post('/user/add',function (req,res) {
 
 })
 
+// 分享上传信息
+router.post('/api/uploadshare', (req,res)=>{
+    const {url,skey,uid,sid,file_name,size,hash_name} = req.body;
+    console.log('分享sid：' + sid)
+    console.log(req.body)
+    // let sql= `select * from video where up=${name}`;
+    let sql= `insert into share(url,skey,uid,sid,file_name,size,hash_name) values('${url}','${skey}','${uid}','${sid}','${file_name}','${size}','${hash_name}')`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        res.send({
+            flag:1,
+            message:"成功",
+            code:'200'
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
+// 查询分享的数据
+router.get('/api/share-list', (req,res)=>{
+    const sid = req.query.sid;
+    console.log('sid:'+sid);
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `select * from share where sid='${sid}'`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("获取分享文件失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }
+        res.send({
+            message:"获取成功",
+            flag:1,
+            code:200,
+            data:{
+                total_count:data.length,
+                page:1,
+                per_page:2,
+                results:data
+            }
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
 // 收藏
 router.post('/api/collection', (req,res)=>{
     const {uid,url} = req.body;
@@ -270,6 +326,7 @@ router.post('/api/collection', (req,res)=>{
     }
     db.dbConn(sql,sqlObj,callBack)
 });
+
 
 // 判断用户是否存在
 router.post('/user/signuser',function (req,res){
@@ -507,7 +564,7 @@ router.get('/web/articles',  (req,res)=>{
 // 获取当前时间并格式化同一格式 在上传文件api中使用
 function getNowFormatDate() {
     var date = new Date();
-    var seperator1 = "-";
+    var seperator1 = "/";
     var seperator2 = ":";
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
@@ -517,9 +574,9 @@ function getNowFormatDate() {
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-        + " " + date.getHours() + seperator2 + date.getMinutes()
-        + seperator2 + date.getSeconds();
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+        " " + date.getHours() + seperator2 + date.getMinutes() +
+        seperator2 + date.getSeconds();
     return currentdate;
 }
 module.exports=router;

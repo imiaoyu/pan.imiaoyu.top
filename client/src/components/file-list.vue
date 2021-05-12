@@ -4,7 +4,7 @@
       :cell-style="{'text-align':'center'}"
       :header-cell-style="{'text-align':'center'}"
       style="width: 100%"
-      :default-sort = "{prop: 'file_name', order: 'ascending'}">
+      :default-sort = "{prop: 'file_name', order: 'descending'}">
 <!--      <el-table-column type="index"-->
 <!--      >-->
 <!--      </el-table-column>-->

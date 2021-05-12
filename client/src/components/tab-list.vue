@@ -2,7 +2,7 @@
   <div class="show">
     <base-header></base-header>
     <div class="notice">
-      请勿上传重要资料
+      最近出现网络不稳定情况正在处理
     </div>
     <el-tabs v-model="tabActivedName"
       class="tab"

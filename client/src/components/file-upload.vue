@@ -31,6 +31,7 @@
 </template>
 <script>
 import SparkMD5 from 'spark-md5'
+import md5 from 'crypto-js/md5'
 export default {
   data () {
     return {
@@ -128,6 +129,8 @@ export default {
       // console.log(this.article.imageUrl)
       //     this.error('视频上传成功')
       this.pan.hash_name = SparkMD5.hash(file.name)
+      // 加密插件
+      console.log('md5: ' + md5('Message'))
       // 上传信息到后台
       this.$http
         .post('/api/newarticle', {
@@ -145,7 +148,7 @@ export default {
         .catch(err => {
           console.log(err)
         })
-      this.$notify.success('视频上传成功')
+      this.$notify.success('上传成功')
       this.videoFlag = ''
     },
     handleError: function (res) {

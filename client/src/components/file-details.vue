@@ -11,12 +11,33 @@
         <span>格式：{{this.data.type}}</span><br><br>
       </div>
       <el-row>
-        <a :href="see(data)"><el-button size="small">查看</el-button></a>
+        <a :href="see(data)"><el-button size="small">预览</el-button></a>
         <el-button size="small" @click="collection">收藏</el-button>
         <a><el-button @click="getFile(data)" size="small">下载</el-button></a>
-        <el-button size="small"  @click="share()" >分享</el-button>
+        <el-button size="small"  @click="dialogFormVisible = true">分享</el-button>
       </el-row>
     </div>
+    <el-dialog title="分享"
+               :visible.sync="dialogFormVisible"
+               width="350px">
+      <el-form :model="form">
+        <el-form-item label="密码"
+                      :label-width="formLabelWidth">
+          <el-input v-model="form.skey"
+                    maxlength="4"
+                    autocomplete="off"
+                    type="text"></el-input>
+        </el-form-item>
+        <a>不输入则无密码分享</a>
+      </el-form>
+      <div slot="footer"
+           class="dialog-footer"
+      style="text-align: center">
+        <el-button size="small" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="share()"
+                   >分 享</el-button>
+      </div>
+    </el-dialog>
     <base-footer></base-footer>
   </div>
 </template>
@@ -33,7 +54,14 @@ export default {
   },
   data () {
     return {
-      data: []
+      dialogFormVisible: false,
+      formLabelWidth: '4rem',
+      data: [],
+      form: {
+        skey: ''
+      },
+      sid: '',
+      username: sessionStorage.getItem('username')
     }
   },
   methods: {
@@ -48,8 +76,21 @@ export default {
       this.download()
       return url
     },
+    // 分享
     share () {
-      alert(window.location.href)
+      // eslint-disable-next-line eqeqeq
+      if (!this.form.skey) {
+        this.upload_share()
+        // alert('no')
+      } else {
+        if (this.form.skey.length === 4) {
+          this.upload_share()
+        } else {
+          this.$message.error('请输入4位数密码')
+        }
+      }
+
+      // alert(window.location.href)
     },
     // 收藏
     collection () {
@@ -90,6 +131,34 @@ export default {
         .catch(err => {
           console.log('Error=>', err)
         })
+    },
+    // 生成分享内容唯一标识
+    randomString (length) {
+      var str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      var result = ''
+      for (var i = length; i > 0; --i) { result += str[Math.floor(Math.random() * str.length)] }
+      return result
+    },
+    upload_share () {
+      this.sid = this.randomString(6)
+      this.$http
+        .post(`/api/uploadshare`, {
+          uid: sessionStorage.getItem('uid'),
+          skey: this.form.skey,
+          url: 'http://pan-qiniu.imiaoyu.top/' + this.data.file_name,
+          sid: this.sid,
+          file_name: this.data.file_name,
+          size: this.data.size,
+          hash_name: this.data.hash_name
+        })
+        .then(res => {
+          this.$message.success(res.data.message)
+          alert('http://pan.imiaoyu.top/#/sid/' + this.sid)
+          this.dialogFormVisible = false
+        })
+        .catch(err => {
+          console.log('Error=>', err)
+        })
     }
   },
   mounted () {
@@ -108,6 +177,14 @@ export default {
           this.$message.error('500错误 稍后重试')
         } else {
           this.data = res.data.data.results[0]
+
+          // eslint-disable-next-line camelcase
+          const upload_time = new Date(this.data.upload_time).toJSON()
+
+          // eslint-disable-next-line no-undef
+          // console.log('time:' + this.getCurrentTime())
+          // 日期格式统一
+          this.data.upload_time = new Date(new Date(upload_time) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
           // console.log(res.data.data.results)
         }
       })
