@@ -172,7 +172,7 @@ router.post('/user/login',function (req,res){
             res.send({
                 flag:0,
                 message:"账号获取密码错误",
-                code:500
+                code:400
             })
             return
         }
@@ -181,7 +181,7 @@ router.post('/user/login',function (req,res){
             res.send({
                 flag:0,
                 message:"账号或密码错误",
-                code:500
+                code:400
             })
             return
         }

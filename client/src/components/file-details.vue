@@ -28,7 +28,7 @@
                     autocomplete="off"
                     type="text"></el-input>
         </el-form-item>
-        <a>不输入则无密码分享</a>
+        <a>不输入则免密分享</a>
       </el-form>
       <div slot="footer"
            class="dialog-footer"
