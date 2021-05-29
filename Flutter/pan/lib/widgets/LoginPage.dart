@@ -1,8 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:pan/widgets/boottom_navigator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:crypto/crypto.dart';
+import 'dart:convert'; // for the utf8.encode method
+
+Dio dio = new Dio();
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,6 +31,8 @@ class _LoginPageState extends State<LoginPage> {
 //  }
 
 
+
+
   //焦点
   FocusNode _focusNodeUserName = new FocusNode();
   FocusNode _focusNodePassWord = new FocusNode();
@@ -39,6 +50,14 @@ class _LoginPageState extends State<LoginPage> {
 
 
   Dio _dio = Dio();
+
+
+
+
+
+  final String uid = "uid";
+
+
   @override
   void initState() {
 //    使用dio获取数据  封装地址
@@ -97,12 +116,13 @@ class _LoginPageState extends State<LoginPage> {
    */
   String validateUserName(value){
     // 正则匹配手机号
-    RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
+//    RegExp exp = RegExp(r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
     if (value.isEmpty) {
       return '用户名不能为空!';
-    }else if (!exp.hasMatch(value)) {
-      return '请输入正确手机号';
     }
+//    else if (!exp.hasMatch(value)) {
+//      return '请输入正确手机号';
+//    }
     return null;
   }
 
@@ -229,6 +249,7 @@ class _LoginPageState extends State<LoginPage> {
             //todo 登录操作
             print("$_username + $_password");
             loadDataByDio();
+
           }
 
         },
@@ -364,28 +385,60 @@ class _LoginPageState extends State<LoginPage> {
 
 //post请求
   loadDataByDio() async {
-    try {
-      print('登陆中');
-      Response response;
-      Dio dio = new Dio();
-      response = await dio.post(
-          "http://api.imiaoyu.top/user/login", data: {"username": _username, "password": _password});
-      if (response.statusCode == 200) {
-        var _result = 'success';
-        print(_result);
+//    md5加密
+    var bytes = utf8.encode(_password); // data being hashed
+    var digest = md5.convert(bytes);
+    print(digest);
+    var response = await dio.post("http://api.imiaoyu.top/user/login", data: {"username": _username, "password": digest.toString()});
+//    dynamic rtn = jsonDecode(response.toString());
+    if(response.data['flag'] == 0) {
+      print("账号或密码错误");
+      Fluttertoast.showToast(
+        msg: '账号或密码错误',
+        fontSize: 14,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        textColor: Colors.black
+      );
+    }else{
 
-//        登陆跳转
-        Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => new BottomNavigatorBarDemo()
+//      print(response.data['data']['uid']);
+//    var uid = response.data['uid'];
+//    储存用户id
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int uid =  response.data['data']['uid'];
+      await prefs.setInt('uid', uid);
+
+
+
+      Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new BottomNavigatorBarDemo(username:response.data['username'],uid:response.data['uid'])
             ), (route) => route == null);
-
-      } else {
-        var _result = 'error code : ${response.statusCode}';
-        print(_result);
-      }
-    } catch (exception) {
-      print('exc:$exception');
     }
+//    try {
+ //      print('登陆中');
+//      Response response;
+//      Dio dio = new Dio();
+//      response = await dio.post(
+//          "http://api.imiaoyu.top/user/login", data: {"username": _username, "password": _password});
+//      if (response.statusCode == 200) {
+//        var _result = 'success';
+//        print(_result);
+//
+//
+////        登陆跳转
+//        Navigator.of(context).pushAndRemoveUntil(
+//            new MaterialPageRoute(builder: (context) => new BottomNavigatorBarDemo()
+//            ), (route) => route == null);
+//
+//      } else {
+//        var _result = 'error code : ${response.statusCode}';
+//        print(_result);
+//      }
+//    } catch (exception) {
+//      print('exc:$exception');
+//    }
     setState(() {});
   }
 

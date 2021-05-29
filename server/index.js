@@ -69,19 +69,20 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 const cors = require('cors');
 const corsOptions = {
-  origin: ['*','http://localhost:8080','http://pan.imiaoyu.top'],
+  origin: ['http://pan.imiaoyu.top','http://api.imiaoyu.top','http://imiaoyu.eh9.cn'],
+  Headers: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With' , 'yourHeaderFeild'],
   optionSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 
-app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By",' 3.2.1');
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-});
+// app.all('*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//   res.header("X-Powered-By",' 3.2.1');
+//   res.header("Content-Type", "application/json;charset=utf-8");
+//   next();
+// });
 
 
 app.use('/',router)

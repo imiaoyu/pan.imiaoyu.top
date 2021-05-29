@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import md5 from 'crypto-js/md5'
 export default {
   name: 'index',
   data () {
@@ -60,6 +61,7 @@ export default {
     // 登录
     signIn () {
       this.dialogFormVisible = false
+      this.form.password = md5(this.form.password).toString()
       this.$http
         .post('/user/login', this.form)
         .then(res => {
@@ -83,7 +85,8 @@ export default {
       this.dialogFormVisible = false
       // 调用检测用户是否存在方法
       this.signuser()
-
+      this.form.password = md5(this.form.password).toString()
+      // console.log('md5:' + this.form.password)
       // eslint-disable-next-line eqeqeq
       if (this.form.username == '' || this.form.password == '') {
         this.$message.error('用户或密码为空')

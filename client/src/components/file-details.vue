@@ -14,7 +14,7 @@
         <a :href="see(data)"><el-button size="small">预览</el-button></a>
         <el-button size="small" @click="collection">收藏</el-button>
         <a><el-button @click="getFile(data)" size="small">下载</el-button></a>
-        <el-button size="small"  @click="dialogFormVisible = true">分享</el-button>
+        <el-button size="small"  @click="dialogFormVisible = true" v-if="username">分享</el-button>
       </el-row>
     </div>
     <el-dialog title="分享"
@@ -24,11 +24,12 @@
         <el-form-item label="密码"
                       :label-width="formLabelWidth">
           <el-input v-model="form.skey"
+                    placeholder="不输入则免密分享"
                     maxlength="4"
                     autocomplete="off"
                     type="text"></el-input>
         </el-form-item>
-        <a>不输入则免密分享</a>
+<!--        <a>不输入则免密分享</a>-->
       </el-form>
       <div slot="footer"
            class="dialog-footer"

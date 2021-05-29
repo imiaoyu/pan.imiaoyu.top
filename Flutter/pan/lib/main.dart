@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pan/widgets/LoginPage.dart';
 import 'package:pan/widgets/boottom_navigator.dart';
+import 'package:pan/widgets/square.dart';
 import 'package:pan/widgets/file_list.dart';
-
+import 'package:pan/widgets/grid_view.dart';
+import 'package:pan/widgets/sqflite.dart';
+import 'package:pan/widgets/loading.dart';
 void main() {
   runApp(MyApp());
 }
@@ -16,11 +19,15 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       routes: {
-        "/": (context) => LoginPage(),
+        "/": (context) => LaunchPage(),
+        "login": (context) => LoginPage(),
         "navigator": (context) => BottomNavigatorBarDemo(),
+        "square": (context) => Square(),
         "file_list": (context) => FileList(),
+        "grid_view": (context) => Gridview(),
+//        "sqlflite": (context) => Sqlflite(),
       },
-      initialRoute: "file_list",
+//      initialRoute: "sqlflite",
     );
   }
 }

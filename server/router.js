@@ -1,4 +1,3 @@
-
 let express=require('express');
 const cors = require('cors');
 let  router=express.Router();
@@ -188,6 +187,7 @@ router.post('/user/login',function (req,res){
         res.send({
                 message:"登录成功",
                 code:200,
+                flag:1,
                 data:{
                     uid:data[0].uid,
                     username:data[0].username
@@ -216,7 +216,8 @@ router.post('/user/add',function (req,res) {
     // var mobile = req.body.username
     // var code = req.body.password
     console.log("服务端", req.body)
-    const {username, password} = req.body;
+    const {username,password} = req.body;
+    // const password = req.body.password;
     let sql = `insert into user(username,password) values('${username}','${password}')`
     console.log("sql", sql)
     let sqlObj = []
@@ -532,8 +533,6 @@ router.get('/web/articles',  (req,res)=>{
     db.dbConn(sql,sqlObj,callBack)
 });
 
-
-//
 // router.get('/web/articles',  (req,res)=>{
 //         res.send({
 //             message:"OK",
@@ -579,4 +578,34 @@ function getNowFormatDate() {
         seperator2 + date.getSeconds();
     return currentdate;
 }
+
+
+// admin后台
+//获取文章列表（后台）
+router.get('/admin/articles',  (req,res)=>{
+    // const {channel_id}=req.query;
+    // console.log(channel_id);
+    let sql= `select * from file`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        res.send({
+            message:"OK",
+            data:{
+                total_count:10,
+                page:1,
+                per_page:2,
+                pre_timestamp: 1613658503995,
+                results:data
+            },
+        })
+        console.log(data)
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
 module.exports=router;

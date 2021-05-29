@@ -24,6 +24,7 @@
         <el-form-item label="密码"
                       :label-width="formLabelWidth">
           <el-input v-model="form.skey"
+                    placeholder="输入分享密码"
                     maxlength="4"
                     autocomplete="off"
                     type="text"></el-input>

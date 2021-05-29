@@ -16,5 +16,10 @@
     "mysql": "^2.18.1",
     "nodejs-websocket": "^1.7.2",
     "qiniu": "^7.3.2"
+  },
+  "apidoc": {
+    "title": "接口文档",
+    "url": "http://localhost:3000"
   }
 }
+

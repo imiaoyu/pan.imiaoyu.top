@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:pan/widgets/file_view.dart';
+import 'package:pan/widgets/square.dart';
+import 'package:pan/widgets/grid_view.dart';
+import 'package:pan/widgets/file_list.dart';
+import 'package:pan/widgets/file_upload.dart';
 //import 'package:flutter_demo/widgets/layout_demo.dart';
 //import 'package:flutter_demo/widgets/dio_demo.dart';
 //
 //import 'dio_demo.dart';
 
 class BottomNavigatorBarDemo extends StatefulWidget {
+
+  String username, uid;
+
+  BottomNavigatorBarDemo({Key key, @required this.username, @required this.uid})
+      : super(key: key);
+
   List<Widget> widgets = [
-    FileView(),
+    FileUpload(),
+    FileList(),
+    Square(),
+    Gridview(),
 //    LayoutDemo(),
 //    DioDemo()
   ];
@@ -15,7 +28,10 @@ class BottomNavigatorBarDemo extends StatefulWidget {
   _BottomNavigatorBarDemoState createState() => _BottomNavigatorBarDemoState();
 }
 
+
 class _BottomNavigatorBarDemoState extends State<BottomNavigatorBarDemo> {
+
+
   int _index = 0;
   @override
   Widget build(BuildContext context) {
@@ -64,9 +80,9 @@ class _BottomNavigatorBarDemoState extends State<BottomNavigatorBarDemo> {
       // ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.widgets_rounded),
+        child: Icon(Icons.arrow_upward),
         onPressed: () {
-          print("object");
+          print("上传中....");
         },
       ),
       body: widget.widgets[_index],

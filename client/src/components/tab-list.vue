@@ -2,7 +2,7 @@
   <div class="show">
     <base-header></base-header>
     <div class="notice">
-      最近出现网络不稳定情况正在处理
+      新增文件分享功能
     </div>
     <el-tabs v-model="tabActivedName"
       class="tab"
@@ -72,13 +72,13 @@ export default {
     }
   },
   mounted () {
-    const h = this.$createElement
+    // const h = this.$createElement
 
-    this.$notify({
-      title: '致用户：',
-      // eslint-disable-next-line standard/object-curly-even-spacing
-      message: h('a', { style: 'color: #888888'}, '新增文件分享功能')
-    })
+    // this.$notify({
+    //   title: '致用户：',
+    //   // eslint-disable-next-line standard/object-curly-even-spacing
+    //   message: h('a', { style: 'color: #888888'}, '新增文件分享功能')
+    // })
   }
 }
 </script>

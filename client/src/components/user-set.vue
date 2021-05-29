@@ -33,6 +33,7 @@
   </div>
 </template>
 <script>
+import md5 from 'crypto-js/md5'
 export default {
   data () {
     //  验证原密码
@@ -87,7 +88,7 @@ export default {
         if (valid) {
           let params = {
             oldPassword: this.ruleForm.oldPass,
-            newPassword: this.ruleForm.newPass,
+            newPassword: md5(this.ruleForm.newPass).toString(),
             uid: sessionStorage.uid
           }
           this.$http

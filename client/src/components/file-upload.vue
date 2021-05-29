@@ -24,14 +24,14 @@
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </div>
-    <div class="el-upload__tip" slot="tip">所有文件格式都支持，且不超过1G</div>
+    <div class="el-upload__tip" slot="tip">所有文件格式都支持，且不超过3G</div>
     <el-progress  v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
   </el-upload>
   </div>
 </template>
 <script>
 import SparkMD5 from 'spark-md5'
-import md5 from 'crypto-js/md5'
+// import md5 from 'crypto-js/md5'
 export default {
   data () {
     return {
@@ -96,7 +96,7 @@ export default {
       this.qiniuData.key = file.name
       this.pan.file_name = file.name
       this.pan.size = file.size
-      const isLt10M = file.size / 1024 / 1024 < 1024
+      const isLt10M = file.size / 1024 / 1024 < 3072
       // eslint-disable-next-line eqeqeq
       // if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) == -1) {
       //   this.$message.error('请上传正确的视频格式')
@@ -110,7 +110,7 @@ export default {
       this.pan.type = suffix
 
       if (!isLt10M) {
-        this.$message.error('上传单个文件大小不能超过1G哦!')
+        this.$message.error('上传单个文件大小不能超过3G哦!')
         return false
       }
     },
@@ -128,9 +128,10 @@ export default {
       // this.article.imageUrl = this.article.vedio_url + '?vframe/jpg/offset/10/w/380/h/180'
       // console.log(this.article.imageUrl)
       //     this.error('视频上传成功')
+      // 文件进行hash处理
       this.pan.hash_name = SparkMD5.hash(file.name)
       // 加密插件
-      console.log('md5: ' + md5('Message'))
+      // console.log('md5: ' + md5('Message'))
       // 上传信息到后台
       this.$http
         .post('/api/newarticle', {
