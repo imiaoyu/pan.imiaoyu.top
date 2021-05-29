@@ -1,0 +1,370 @@
+[
+  {
+    "value": "home",
+    "label": "主页",
+    "icon": "fa fa-home",
+    "show": 1,
+    "children": [
+      {
+        "value": "home_page_one",
+        "label": "主页一",
+        "path": "/home",
+        "icon": "fa fa-home",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "user",
+    "label": "用户和权限",
+    "icon": "fa fa-user-o",
+    "show": 1,
+    "children": [
+      {
+        "value": "user_role",
+        "label": "角色管理",
+        "path": "/user/role",
+        "icon": "fa fa-user",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "user_power",
+        "label": "角色权限",
+        "path": "/user/power",
+        "icon": "fa fa-check-square-o",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "user",
+        "label": "用户",
+        "path": "/user",
+        "icon": "fa fa-user-o",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "notice_email",
+        "label": "邮件",
+        "path": "/notice/email",
+        "icon": "fa fa-envelope-o",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "notice",
+    "label": "通知管理",
+    "icon": "fa fa-paper-plane",
+    "show": 1,
+    "children": [
+      {
+        "value": "notice_notice",
+        "label": "通知",
+        "path": "/notice",
+        "icon": "fa fa-newspaper-o",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "notice_msg",
+        "label": "留言",
+        "path": "/msg",
+        "icon": "fa fa-newspaper-o",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "tool",
+    "label": "EuiAdmin内置工具",
+    "icon": "fa fa-briefcase",
+    "show": 1,
+    "children": [
+      {
+        "value": "home_page_one",
+        "label": "Tinymce富文本编辑器",
+        "path": "/eui/tinymce",
+        "icon": "fa fa-home",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "tool_icon",
+        "label": "图标选择器",
+        "path": "/eui/icon",
+        "icon": "fa fa-openid",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "qrcode",
+        "label": "二维码",
+        "path": "/eui/qrcode",
+        "icon": "fa fa-qrcode",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "city_choose",
+        "label": "城市选择",
+        "path": "/eui/city/choose",
+        "icon": "fa fa-wpforms",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "eui_card",
+        "label": "卡片",
+        "path": "/eui/card",
+        "icon": "fa fa-id-card-o",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "eui_file",
+        "label": "文件上传",
+        "path": "/eui/file/upload",
+        "icon": "fa fa-file",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "eui_power",
+        "label": "菜单编辑器",
+        "path": "/eui/power",
+        "icon": "fa fa-list-alt",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "table",
+    "label": "表格",
+    "icon": "fa fa-table",
+    "show": 1,
+    "children": [
+      {
+        "value": "table_eui",
+        "label": "Eui表格",
+        "path": "/eui/table",
+        "icon": "fa fa-table",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "tool_excel_out",
+        "label": "Eui表格导出excel",
+        "path": "/eui/table/out",
+        "icon": "fa fa-table",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "tool_excel_exios",
+        "label": "Axios交互表格",
+        "path": "/table/axios",
+        "icon": "fa fa-table",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "echarts",
+    "label": "Echarts图表",
+    "icon": "fa fa-area-chart",
+    "show": 1,
+    "children": [
+      {
+        "value": "echarts_bar",
+        "label": "柱状图",
+        "path": "/echarts/bar",
+        "icon": "fa fa-bar-chart",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "echarts_line",
+        "label": "折线图",
+        "path": "/echarts/line",
+        "icon": "fa fa-line-chart",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "echart_map",
+        "label": "中国地图",
+        "path": "/echarts/map",
+        "icon": "fa fa-map-marker",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "page",
+    "label": "常用页面",
+    "icon": "fa fa-clone",
+    "show": 1,
+    "children": [
+      {
+        "value": "page_eui",
+        "label": "嵌入页面",
+        "path": "/page/eui",
+        "icon": "fa fa-list-alt",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "page_warning",
+        "label": "404错误页",
+        "path": "/page/warning",
+        "icon": "fa fa-warning",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "page_error",
+        "label": "500",
+        "path": "/page/error",
+        "icon": "fa fa-window-close",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "article",
+    "label": "文章撰写",
+    "icon": "fa fa-book",
+    "show": 1,
+    "children": [
+      {
+        "value": "article",
+        "label": "文章撰写",
+        "path": "/article",
+        "icon": "fa fa-edit",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "article_label",
+        "label": "文章类别管理",
+        "path": "/article/label",
+        "icon": "fa fa-flag",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "goods",
+    "label": "商品发布",
+    "icon": "fa fa-shopping-cart",
+    "show": 1,
+    "children": [
+      {
+        "value": "goods_list",
+        "label": "商品列表",
+        "path": "/apply/goods",
+        "icon": "fa fa-list",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "article_label",
+        "label": "商品发布",
+        "path": "/apply/goods/release",
+        "icon": "fa fa-flag",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "setting",
+    "label": "设置",
+    "icon": "fa fa-cog",
+    "show": 1,
+    "children": [
+      {
+        "value": "setting_web",
+        "label": "网站基础设置",
+        "path": "/setting/web",
+        "icon": "fa fa-globe",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "setting_email",
+        "label": "网站基础设置",
+        "path": "/setting/email",
+        "icon": "fa fa-envelope",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "user",
+    "label": "个人设置",
+    "icon": "fa fa-user",
+    "show": 1,
+    "children": [
+      {
+        "value": "user_setting",
+        "label": "个人设置",
+        "path": "/setting/user",
+        "icon": "fa fa-user",
+        "show": 1,
+        "vist": 1
+      },
+      {
+        "value": "user_password",
+        "label": "密码设置",
+        "path": "/setting/password",
+        "icon": "fa fa-key",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "web_socket",
+    "label": "Socket组件",
+    "icon": "fa fa-link",
+    "show": 1,
+    "children": [
+      {
+        "value": "web_socket_link",
+        "label": "WebSocket测试",
+        "path": "/scoket",
+        "icon": "fa fa-link",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  },
+  {
+    "value": "vist_log",
+    "label": "访问日志",
+    "icon": "fa fa-link",
+    "show": 1,
+    "children": [
+      {
+        "value": "vist_log_one",
+        "label": "访问日志",
+        "path": "/log",
+        "icon": "fa fa-user",
+        "show": 1,
+        "vist": 1
+      }
+    ]
+  }
+]
