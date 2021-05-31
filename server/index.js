@@ -55,7 +55,7 @@ const bodyParser=require('body-parser')
 const  router=require('./router');
 const  admin=require('./admin');
 const app=express()
-
+const JwtUtil = require('./jwt');
 
 
 
@@ -70,7 +70,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 const cors = require('cors');
 const corsOptions = {
-  origin: ['http://pan.imiaoyu.top','http://api.imiaoyu.top','http://imiaoyu.eh9.cn'],
+  origin: ['http://pan.imiaoyu.top','http://api.imiaoyu.top','http://imiaoyu.eh9.cn','http://localhost:8080'],
   Headers: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With' , 'yourHeaderFeild'],
   optionSuccessStatus: 200
 };
@@ -85,8 +85,26 @@ app.use(cors(corsOptions));
 //   next();
 // });
 
-
 app.use('/',router)
+app.use(function (req, res, next) {
+  // 我这里知识把登陆和注册请求去掉了，其他的多有请求都需要进行token校验
+  if (req.url != '/v1/login' && req.url != '/v1/register' && req.url != '/') {
+    let token = req.headers.token;
+    let jwt = new JwtUtil(token);
+    let result = jwt.verifyToken();
+    // 如果考验通过就next，否则就返回登陆信息不正确
+    if (result == 'err') {
+      console.log(result);
+      res.send({status: 403, msg: '登录已过期,请重新登录'});
+      // res.render('login.html');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 app.use('/v1',admin)
 app.listen(3000,(req,res)=>{
   console.log('http://localhost:3000')

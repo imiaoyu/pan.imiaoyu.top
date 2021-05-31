@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 const  conn=require('./db');
 const db=require("./db");
 const qiniu = require("qiniu");
+const JwtUtil = require('./jwt');
 
 
   // 上传文件
@@ -158,13 +159,18 @@ router.post('/login',function (req,res){
             })
             return
         }
+        let _id = data[0].username.toString();
+        // 将用户id传入并生成token
+        let jwt = new JwtUtil(_id);
+        let token = jwt.generateToken();
         res.send({
             message:"登录成功",
             code:200,
             flag:1,
             data:{
                 uid:data[0].uid,
-                username:data[0].username
+                username:data[0].username,
+                token: token
             }
         })
     }
