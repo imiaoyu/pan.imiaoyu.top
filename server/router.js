@@ -170,7 +170,7 @@ router.post('/user/login',function (req,res){
             console.log("失败")
             res.send({
                 flag:0,
-                message:"账号获取密码错误",
+                message:"账号或密码错误",
                 code:400
             })
             return
@@ -180,6 +180,15 @@ router.post('/user/login',function (req,res){
             res.send({
                 flag:0,
                 message:"账号或密码错误",
+                code:400
+            })
+            return
+        }
+        if(data[0].flag==0){
+            console.log("账号被封禁")
+            res.send({
+                flag:3,
+                message:"账号被封禁",
                 code:400
             })
             return
@@ -195,9 +204,6 @@ router.post('/user/login',function (req,res){
             })
             // console.log(data[0].uid+' '+data[0].username)
             console.log('登录成功')
-
-
-
     }
     db.dbConn(sql,sqlObj,callBack)
     // res.json(name+pwd);

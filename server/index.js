@@ -53,6 +53,7 @@
 const express=require('express');
 const bodyParser=require('body-parser')
 const  router=require('./router');
+const  admin=require('./admin');
 const app=express()
 
 
@@ -86,6 +87,7 @@ app.use(cors(corsOptions));
 
 
 app.use('/',router)
+app.use('/v1',admin)
 app.listen(3000,(req,res)=>{
   console.log('http://localhost:3000')
 })
