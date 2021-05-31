@@ -3,7 +3,7 @@ import { Loading } from 'element-ui'
 
 let httpInstance = axios.create()
 
-httpInstance.defaults.baseURL = 'http://api.imiaoyu.top/'
+httpInstance.defaults.baseURL = 'http://154.22.114.12:3000/'
 // httpInstance.defaults.baseURL = 'http://localhost:3000/'
 httpInstance.defaults.timeout = 5000
 
