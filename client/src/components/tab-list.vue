@@ -2,12 +2,14 @@
   <div class="show">
     <base-header></base-header>
     <div class="notice">
-      新增文件分享功能
+      新增我的收藏与我的分享
     </div>
     <el-tabs v-model="tabActivedName"
       class="tab"
       @tab-click="handleClick">
-      <el-tab-pane v-for="(item, index) in componentList"
+      <el-tab-pane
+        v-for="(item, index) in componentList"
+        class="tab-list"
         :key="index"
         :label="item.tabLabel"
         :name="item.tabName">
@@ -24,8 +26,11 @@ import BaseHeader from '../layout/header'
 import BaseFooter from '../layout/footer'
 import UploadFile from './file-upload'
 import FileList from './file-list'
-import userSet from './user-set'
+// import userSet from './user-set'
 import about from './about-us'
+import collection from './collection'
+// eslint-disable-next-line camelcase
+import my_share from './my-share'
 
 export default {
   name: 'show',
@@ -34,7 +39,8 @@ export default {
     BaseFooter,
     UploadFile,
     FileList,
-    userSet,
+    collection,
+    my_share,
     about
   },
   data () {
@@ -44,20 +50,25 @@ export default {
         {
           tabName: 'first',
           compoName: 'upload-file',
-          tabLabel: '上传文件'
+          tabLabel: '上传'
         },
         {
           tabName: 'second',
           compoName: 'file-list',
-          tabLabel: '文件列表'
+          tabLabel: '文件'
         },
         {
           tabName: 'third',
-          compoName: 'user-set',
-          tabLabel: '用户设置'
+          compoName: 'collection',
+          tabLabel: '收藏'
         },
         {
           tabName: 'fourth',
+          compoName: 'my_share',
+          tabLabel: '分享'
+        },
+        {
+          tabName: 'fifth',
           compoName: 'about',
           tabLabel: '关于'
         }
@@ -93,5 +104,10 @@ export default {
   font-size: 14px;
   height: 20px;
   width: 100%;
+}
+.tab-list{
+  /*padding: 0 40px;*/
+  margin-left: 10px;
+  /*padding-left: 25px;*/
 }
 </style>

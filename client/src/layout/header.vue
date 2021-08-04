@@ -42,7 +42,7 @@ export default {
       this.$router.push({ path: '/user-information'})
     },
     sign () {
-      this.$router.push({ path: '/' })
+      this.$router.push({path: '/', query: {flag: 1}})
     }
   }
 }

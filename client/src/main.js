@@ -11,6 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import axios from 'axios'
 
+import VueClipBoard from 'vue-clipboard2'
+Vue.use(VueClipBoard)
+
 Vue.prototype.$axios = axios
 
 Vue.prototype.$http = http

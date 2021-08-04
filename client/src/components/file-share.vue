@@ -5,7 +5,11 @@
       <div class="head">
         <span>{{this.data.file_name}}</span>
         <el-divider></el-divider>
-        <span>大小：{{Math.round(this.data.size/1024/1024*100)/100 +'MB'}}</span><br>
+        <span>大小：{{Math.round(this.data.size/1024/1024*100)/100 +'MB'}}</span>
+        <i v-if="!flag" class="el-icon-star-off" style="color:#f6f20f; font-size: 20px" @click="collection_add"></i>
+        <i v-if="flag" class="el-icon-star-on" style="color:#f6f20f; font-size: 20px" ></i>
+<!--           @click="collection_delete(data)"-->
+        <br>
       </div>
       <div class="download">
 <!--        <a :href="see(data)"><el-button size="medium">预览</el-button></a>-->
@@ -13,9 +17,13 @@
         <svg @click="load" t="1620825376308" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4763" width="60" height="60" ><path d="M511.957333 0c282.752 0 512 229.248 512 512s-229.248 512-512 512-512-229.248-512-512 229.248-512 512-512z m0 256a42.666667 42.666667 0 0 0-42.666666 42.666667v337.92l-144-115.2-4.394667-3.114667a42.666667 42.666667 0 0 0-48.938667 69.717333l213.333334 170.666667a42.666667 42.666667 0 0 0 53.333333 0l213.333333-170.666667 3.968-3.626666a42.666667 42.666667 0 0 0-57.301333-63.018667L554.666667 636.501333V298.666667a42.666667 42.666667 0 0 0-37.674667-42.368z" fill="#2499b2" p-id="4764" data-spm-anchor-id="a313x.7781069.0.i0" class=""></path></svg>
       </div>
     </div>
-    <div class="err" v-if="data == ''">
+    <div class="err" v-if="data.flag==0">
       <i class="el-icon-share"></i>
       该分享已被取消
+    </div>
+    <div class="err" v-if="data == ''">
+      <i class="el-icon-loading"></i>
+      努力加载中...
     </div>
     <el-dialog title="输入分享密码"
                :visible.sync="dialogFormVisible"
@@ -55,6 +63,7 @@ export default {
       dialogFormVisible: false,
       formLabelWidth: '4rem',
       data: [],
+      flag: 0,
       form: {
         skey: ''
       },
@@ -107,28 +116,96 @@ export default {
         .catch(err => {
           console.log('Error=>', err)
         })
+    },
+    collection_add () {
+      if (!sessionStorage.username) {
+        this.$message.error('请先登录')
+      } else {
+        this.$http
+          .post(`/api/collection`, {
+            uid: sessionStorage.getItem('uid'),
+            url: window.location.href,
+            username: this.data.file_name,
+            skey: this.data.skey,
+            file_name: this.data.file_name,
+            hash_name: this.data.hash_name,
+            sid: this.data.sid
+          })
+          .then(res => {
+            this.$message.success(res.data.message)
+            this.flag = 1
+          })
+          .catch(err => {
+            console.log('Error=>', err)
+          })
+      }
+    },
+    collection_delete (data) {
+      console.log(data)
+      this.$http
+        .delete(`/api/collection_delete/${data.hash_name}/${data.id}`)
+        .then(res => {
+          this.$message.success(res.data.message)
+          this.refreshFileList()
+          this.flag = 0
+        })
+        .catch(err => {
+          console.log('Error=>', err)
+        })
+    },
+    share_list () {
+      const sid = this.$route.params
+      // console.log(hash_name)
+      this.$http
+        .get('/api/share-list', {
+          // eslint-disable-next-line no-undef
+          params: sid
+        })
+        .then(res => {
+          // eslint-disable-next-line eqeqeq
+          if (res.data.flag == 0) {
+            this.$message.error('500错误 稍后重试')
+          } else {
+            this.data = res.data.data.results[0]
+            // console.log(this.data)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    collection () {
+      const sid = this.$route.params.sid
+      console.log(sid)
+      this.$http
+        .get('/api/collection', {
+          // eslint-disable-next-line no-undef
+          params: {
+            sid: sid,
+            uid: sessionStorage.getItem('uid')
+          }
+        })
+        .then(res => {
+          // eslint-disable-next-line eqeqeq
+          if (res.data.flag == 0) {
+            this.flag = 0
+            // this.$message.error('不在收藏列表中')
+          } else {
+            this.flag = 1
+            // console.log(this.data)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mounted () {
-    const sid = this.$route.params
-    // console.log(hash_name)
-    this.$http
-      .get('/api/share-list', {
-        // eslint-disable-next-line no-undef
-        params: sid
-      })
-      .then(res => {
-        // eslint-disable-next-line eqeqeq
-        if (res.data.flag == 0) {
-          this.$message.error('500错误 稍后重试')
-        } else {
-          this.data = res.data.data.results[0]
-          // console.log(this.data)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    this.share_list()
+    if (!sessionStorage.getItem('uid')) {
+    } else {
+      this.collection()
+    }
   }
 
 }

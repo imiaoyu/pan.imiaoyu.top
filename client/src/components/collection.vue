@@ -3,11 +3,11 @@
     <ul>
       <li v-for="(item,index) in list"
           :key="index"
-          :class="{move:candelete.id==item.id}"
-          @touchstart="touchStart(item)"
-          @touchend="touchEnd(item)"
-          @dblclick="deleteItem(index,item)">
-        <i class="el-icon-share" style="color:#7ac7cf;font-size: 18px;"></i>
+        :class="{move:candelete.id==item.id}"
+        @touchstart="touchStart(item)"
+        @touchend="touchEnd(item)"
+        @dblclick="deleteItem(index,item)">
+        <i class="el-icon-star-on" style="color:#f6f20f;font-size: 18px;"></i>
         <a @click="open(item)">{{item.file_name}}</a><a v-if="item.skey">---密码：{{item.skey}}</a>
         <div class="del" @click="deleteItem(index,item)">删除</div>
       </li>
@@ -38,7 +38,7 @@ export default {
       this.list.splice(index, 1)
       console.log(item)
       this.$http
-        .delete(`/api/myshare_delete/${item.hash_name}/${item.id}`)
+        .delete(`/api/collection_delete/${item.hash_name}/${item.id}`)
         .then(res => {
           this.$message.success(res.data.message)
           this.refreshFileList()
@@ -76,7 +76,7 @@ export default {
     },
     listitem () {
       this.$http
-        .get(`/api/myshare_list`, {
+        .get(`/api/collection_list`, {
           params: {
             uid: sessionStorage.getItem('uid')
           }
@@ -119,7 +119,7 @@ export default {
 }
 li{
   background: #fff;
-  border-bottom: 1px solid #eae7e7;
+  border-bottom: 1px solid #EAE7E7;
   line-height: 50px;
   position: relative;
   transform: translateX(0);

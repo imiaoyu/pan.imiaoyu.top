@@ -72,11 +72,39 @@ export default {
       currentPage: 1, // 初始页
       pagesize: 10, //    每页的数据
       tableData: [],
-      show: '',
+      show: true,
       screenWidth: ''
     }
   },
+  mounted () {
+    this.one()
+    this.getFileList()
+  },
   methods: {
+    one () {
+      // const _this = this
+      this.screenWidth = document.body.clientWidth
+      if (document.body.clientWidth > 1000) {
+        this.show = true
+        // console.log('pc')
+        // eslint-disable-next-line eqeqeq
+      } else {
+        this.show = false
+        // console.log('moble')
+      }
+
+      // window.addEventListener('resize', function () {
+      //   console.log('窗口发生变化' + window.innerWidth)
+      //   if (window.innerWidth > 1000) {
+      //     this.show = true
+      //     console.log('pc')
+      //     // eslint-disable-next-line eqeqeq
+      //   } else {
+      //     this.show = false
+      //     console.log('moble')
+      //   }
+      // })
+    },
     // 删除数据
     handleDelete (index, row) {
       this.$http
@@ -166,28 +194,6 @@ export default {
       this.currentPage = currentPage
       console.log(this.currentPage) // 点击第几页
     }
-  },
-  mounted () {
-    // 挂载window.onresize方法
-    const that = this
-    window.onresize = () => {
-      return (() => {
-        window.screenWidth = window.innerWidth
-        that.screenWidth = window.screenWidth
-      })()
-
-      // eslint-disable-next-line no-unreachable
-      if (this.screenWidth < 1200) {
-        this.show = false
-        // eslint-disable-next-line eqeqeq
-      } else if (this.screenWidth == 1920) {
-        this.show = true
-      } else {
-        this.show = true
-      }
-    }
-
-    this.getFileList()
   }
   // watch: {
   //   screenWidth (val) {

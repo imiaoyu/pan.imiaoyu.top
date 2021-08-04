@@ -11,10 +11,19 @@
         <span>格式：{{this.data.type}}</span><br><br>
       </div>
       <el-row>
-        <a :href="see(data)"><el-button size="small">预览</el-button></a>
-        <el-button size="small" @click="collection">收藏</el-button>
-        <a><el-button @click="getFile(data)" size="small">下载</el-button></a>
-        <el-button size="small"  @click="dialogFormVisible = true" v-if="username">分享</el-button>
+        <a :href="see(data)"><el-button size="small" type="info" icon="el-icon-view">预览</el-button></a>
+<!--        <el-button size="small" @click="collection">收藏</el-button>-->
+        <a><el-button @click="getFile(data)" size="small" type="success" icon="el-icon-download">下载</el-button></a>
+
+<!--        <el-button  size="mini" type="success" icon="el-icon-view" class="tag-read" :data-clipboard-text="copy"-->
+<!--                   @click="handleCopy(index, copy)">复制链接-->
+<!--        </el-button>-->
+<!--        <button-->
+<!--          v-clipboard:copy="copy"-->
+<!--          v-clipboard:success="firstCopySuccess"-->
+<!--          v-clipboard:error="firstCopyError"-->
+<!--        >第一种方式复制</button>-->
+        <el-button size="small"  @click="dialogFormVisible = true" v-if="username" type="warning" icon="el-icon-share">分享</el-button>
       </el-row>
     </div>
     <el-dialog title="分享"
@@ -35,7 +44,9 @@
            class="dialog-footer"
       style="text-align: center">
         <el-button size="small" @click="dialogFormVisible = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="share()"
+        <el-button size="small"
+                   type="primary"
+                   @click="share()"
                    >分 享</el-button>
       </div>
     </el-dialog>
@@ -55,6 +66,7 @@ export default {
   },
   data () {
     return {
+      copy: '123456',
       dialogFormVisible: false,
       formLabelWidth: '4rem',
       data: [],
@@ -66,6 +78,14 @@ export default {
     }
   },
   methods: {
+    firstCopySuccess (e) {
+      console.log('copy arguments e:', e)
+      alert('复制成功!')
+    },
+    firstCopyError (e) {
+      console.log('copy arguments e:', e)
+      alert('复制失败!')
+    },
     // handleDownload () {
     //   setTimeout(() => {
     //     this.refreshFileList()
@@ -154,7 +174,26 @@ export default {
         })
         .then(res => {
           this.$message.success(res.data.message)
-          alert('http://pan.imiaoyu.top/#/sid/' + this.sid)
+
+          if (this.form.skey === '') {
+            this.copy = '链接：' + 'http://pan.imiaoyu.top/#/sid/' + this.sid
+          } else {
+            this.copy = '链接：' + 'http://pan.imiaoyu.top/#/sid/' + this.sid + ' 密码：' + this.form.skey
+          }
+
+          // 复制到剪切板
+          this.$copyText(this.copy).then(
+            function (e) {
+              console.log('copy arguments e:', e)
+              alert('已复制到剪切板')
+            },
+            function (e) {
+              console.log('copy arguments e:', e)
+              alert('复制失败')
+            }
+          )
+
+          // 关闭对话框
           this.dialogFormVisible = false
         })
         .catch(err => {

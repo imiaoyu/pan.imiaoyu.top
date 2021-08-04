@@ -70,7 +70,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 const cors = require('cors');
 const corsOptions = {
-  origin: ['http://pan.imiaoyu.top','http://api.imiaoyu.top','http://imiaoyu.eh9.cn','http://localhost:8080'],
+  origin: ['http://pan.imiaoyu.top','https://pan.imiaoyu.top','http://api.imiaoyu.top','http://imiaoyu.eh9.cn','http://localhost:8080','http://localhost:8082'],
   Headers: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With' , 'yourHeaderFeild'],
   optionSuccessStatus: 200
 };

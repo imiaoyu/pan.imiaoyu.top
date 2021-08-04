@@ -314,10 +314,10 @@ router.get('/api/share-list', (req,res)=>{
 
 // 收藏
 router.post('/api/collection', (req,res)=>{
-    const {uid,url} = req.body;
+    const {uid,url,username,file_name,hash_name,sid,skey} = req.body;
     console.log(req.body)
     // let sql= `select * from video where up=${name}`;
-    let sql= `insert into collection(uid,url) values('${uid}','${url}')`;
+    let sql= `insert into collection(uid,url,username,file_name,hash_name,sid,skey) values('${uid}','${url}','${username}','${file_name}','${hash_name}','${sid}','${skey}')`;
     console.log("sql",sql)
     let sqlObj=[]
     let callBack=function(err,data){
@@ -327,6 +327,7 @@ router.post('/api/collection', (req,res)=>{
             return
         }
         res.send({
+            flag: 1,
             message:"收藏成功",
             code:'200'
         })
@@ -438,6 +439,161 @@ router.get('/api/download', (req,res)=>{
     db.dbConn(sql,sqlObj,callBack)
 });
 
+// 查询收藏数据
+router.get('/api/collection', (req,res)=>{
+    const {uid,sid} = req.query;
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `select * from collection where sid='${sid}' and uid ='${uid}'`
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }if (!data.length) {
+            res.send({
+                message:"失败",
+                flag:0,
+                code:200
+            })
+        }
+        res.send({
+            message:"成功",
+            flag:1,
+            code:200
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+// 收藏列表
+router.get('/api/collection_list', (req,res)=>{
+    const uid = req.query.uid;
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `select * from collection where uid='${uid}'`
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }
+        res.send({
+            message:"成功",
+            flag:1,
+            code:200,
+            results:data
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
+//删除收藏数据
+router.delete('/api/collection_delete/:hash_name/:id',  (req,res)=>{
+    const {hash_name,id}=req.params;
+    console.log(req.params);
+    // let sql= `select * from video where up=${name}`;
+    let sql= `delete from collection where hash_name='${hash_name}' and id='${id}'`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        else{
+            res.send({
+                message:"删除成功",
+                code:200,
+            })
+        }
+
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
+// 用户反馈
+router.post('/api/feedback', (req,res)=>{
+    const {uid,content} = req.body;
+    console.log('用户反馈：' + content)
+    console.log(req.body)
+    // let sql= `select * from video where up=${name}`;
+    let sql= `insert into feedback(uid,content) values('${uid}','${content}')`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        res.send({
+            flag:1,
+            message:"成功",
+            code:'200'
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
+// 分享列表
+router.get('/api/myshare_list', (req,res)=>{
+    const uid = req.query.uid;
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `select * from share where uid='${uid}'`
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            // code:0,
+            console.log("失败")
+            // res.status(500).json('Error=>', err);
+            return
+        }
+        res.send({
+            message:"成功",
+            flag:1,
+            code:200,
+            results:data
+        })
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+// 删除分享数据
+router.delete('/api/myshare_delete/:hash_name/:id', (req,res)=>{
+    const {hash_name,id}=req.params;
+    // let sql= `select * from video where up=${name}`;
+    // let sql= `select * from video where up='${username}'`;
+    let sql= `delete from share where hash_name='${hash_name}' and id='${id}'`;
+    console.log("sql",sql)
+    let sqlObj=[]
+    let callBack=function(err,data){
+        // console.log("data:",data.length)
+        if(err){
+            console.log("失败")
+            return
+        }
+        else{
+            res.send({
+                message:"删除成功",
+                code:200,
+            })
+        }
+
+    }
+    db.dbConn(sql,sqlObj,callBack)
+});
+
 //新增数据
 router.post('/api/InsertUserMsg',(req,res)=>{
     conn.query('INSERT INTO usermsg SET ?',req.body,(err,results)=>{
@@ -459,7 +615,6 @@ router.post('/api/delUserMsg',(req,res)=>{
         }
     })
 });
-
 
 
 

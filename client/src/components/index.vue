@@ -71,9 +71,12 @@ export default {
             this.$message.success(res.data.message)
             sessionStorage.setItem('uid', res.data.data.uid)
             sessionStorage.setItem('username', res.data.data.username)
-
             //  跳转到其他页面
-            this.$router.push('tab-list')
+            if (!this.$route.query.flag) {
+              this.$router.push('tab-list')
+            } else {
+              this.$router.go(-2)
+            }
           }
         })
         .catch(err => {
